@@ -56,6 +56,24 @@ namespace DemoWinFormApp
                     //TODO: If license is valid, you can do extra checking here
                     //TODO: E.g., check license expiry date if you have added expiry date property to your license entity
                     //TODO: Also, you can set feature switch here based on the different properties you added to your license entity 
+                    if (_lic.ExpirationDate == DateTime.MinValue)
+                    {
+                        MessageBox.Show("Lifetime license");
+                    }
+                    else
+                    {
+                        DateTime ExpireDate = _lic.ExpirationDate.Date.Add(new TimeSpan(0, 23, 59, 59, 999));
+                        int remainingDays = (int)(ExpireDate - DateTime.Now).TotalDays;
+
+                        if (remainingDays <= 0)
+                        {
+                            MessageBox.Show("Your license expired. Please renew");
+                        }
+                        else if (remainingDays <= 14)
+                        {
+                            MessageBox.Show($"Your license will expire in {remainingDays} days.\nPlease renew your license in time.");
+                        }
+                    }
 
                     //Here for demo, just show the license information and RETURN without additional checking       
                     licInfo.ShowLicenseInfo(_lic);

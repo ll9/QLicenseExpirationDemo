@@ -130,7 +130,7 @@
     <value>118, 24</value>
   </data>
   <data name="rdoVolumeLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 17</value>
+    <value>100, 17</value>
   </data>
   <data name="rdoVolumeLicense.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -157,7 +157,7 @@
     <value>6, 24</value>
   </data>
   <data name="rdoSingleLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 17</value>
+    <value>94, 17</value>
   </data>
   <data name="rdoSingleLicense.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -244,7 +244,7 @@
     <value>11</value>
   </data>
   <data name="grpbxUniqueID.Text" xml:space="preserve">
-    <value>License UID</value>
+    <value>ID (Firmenname)</value>
   </data>
   <data name="&gt;&gt;grpbxUniqueID.Name" xml:space="preserve">
     <value>grpbxUniqueID</value>
@@ -336,9 +336,9 @@
   <data name="&gt;&gt;btnGenLicense.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="$this.Localizable" type="System.Boolean, mscorlib">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>

@@ -1,6 +1,8 @@
 ﻿using QLicense;
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace DemoLicense
@@ -47,14 +49,30 @@ namespace DemoLicense
             {
                 case LicenseTypes.Single:
                     //For Single License, check whether UID is matched
-                    if (this.UID == LicenseHandler.GenerateUID(this.AppName))
+                    string hash;
+                    var firmenName = Microsoft.VisualBasic.Interaction.InputBox("Firmenname:", "Title", "ID (Firmenname");
+                    // Create a SHA256   
+                    using (SHA256 sha256Hash = SHA256.Create())
                     {
-                        _licStatus = LicenseStatus.VALID;
+                        // ComputeHash - returns byte array  
+                        byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(firmenName));
+
+                        // Convert byte array to a string   
+                        StringBuilder builder = new StringBuilder();
+                        for (int i = 0; i < bytes.Length; i++)
+                        {
+                            builder.Append(bytes[i].ToString("x2"));
+                        }
+                        hash = builder.ToString();
+                    }
+
+                    if (hash != this.UID)
+                    {
+                        _licStatus = LicenseStatus.INVALID;
                     }
                     else
                     {
-                        validationMsg = "The license is NOT for this copy!";
-                        _licStatus = LicenseStatus.INVALID;                    
+                        _licStatus = LicenseStatus.VALID;
                     }
                     break;
                 case LicenseTypes.Volume:

@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.Reflection;
 using QLicense;
 using DemoLicense;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DemoWinFormApp
 {
@@ -42,12 +44,36 @@ namespace DemoWinFormApp
                     _certPubicKeyData,
                     out _status,
                     out _msg);
+
+                string hash;
+                var firmenName = Microsoft.VisualBasic.Interaction.InputBox("Firmenname:", "Title", "ID (Firmenname");
+                // Create a SHA256   
+                using (SHA256 sha256Hash = SHA256.Create())
+                {
+                    // ComputeHash - returns byte array  
+                    byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(firmenName));
+
+                    // Convert byte array to a string   
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < bytes.Length; i++)
+                    {
+                        builder.Append(bytes[i].ToString("x2"));
+                    }
+                    hash = builder.ToString();
+                }
+
+                if (hash != _lic.UID)
+                {
+                    _status = LicenseStatus.INVALID;
+                    _msg = "Der angegebene Firmenname stimmt mit der Lizenz nicht überein";
+                }
             }
             else
             {
                 _status = LicenseStatus.INVALID;
                 _msg = "Your copy of this application is not activated";
             }
+
 
             switch (_status)
             {
@@ -84,6 +110,7 @@ namespace DemoWinFormApp
                     //for the other status of license file, show the warning message
                     //and also popup the activation form for user to activate your application
                     MessageBox.Show(_msg, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
 
                     using (frmActivation frm = new frmActivation())
                     {
